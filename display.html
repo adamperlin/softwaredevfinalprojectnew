@@ -1,0 +1,59 @@
+
+<html>
+<canvas id='canvas' width='600' height='300'>
+        This will print if Canvas not supported
+    </canvas>
+    <style>
+#canvas {
+  margin: 10px;
+  padding: 10px;
+  background: #ffffff;
+  border: thin inset #aaaaaa;
+}
+    </style>
+  <script src="/socket.io/socket.io.js"></script>
+<script>
+var socket = io('/');
+function getData(){
+  socket.emit('getwifidata'); //send a wifi data request
+}
+socket.on('wifidata', (data) => { //response from wifi signal info
+  drawCanvas(data);
+});
+
+function drawCanvas(data) {
+  var canvas = document.getElementById('canvas');
+  var socket = io('/');
+  context = canvas.getContext('2d');
+  ap = [];
+  ap1 = {};
+
+var left = 20;
+var right = 20;
+var top = 20;
+for (var i = data.length - 4; i < data.length; i++){
+  left += 20;
+  right += 20;
+  ap.push({top:})
+}
+
+  ap.push({top:20, left:30, radius: -1*data[data.length-1].SIGNAL/3, name: data[data.length-1].ESSID})
+  ap.push({top: 20,left: 80,radius: -1*data[data.length-2].SIGNAL/3,name: data[data.length-2].ESSID});
+  ap.push({top: 250,left: 180,radius: -1*data[data.length-3].SIGNAL/3,name: data[data.length-3].ESSID});
+
+
+  for(i=0;i<ap.length;i++){
+  context.beginPath();
+  context.arc(ap[i].top, ap[i].left, ap[i].radius, 0, 2 * Math.PI);
+
+  context.stroke();
+  //contet.endPath();
+
+  }
+  context.font = '18pt Arial';
+  context.fillStyle = 'rgb(4,222,3)';
+  context.fillText("access points", 10, 20);
+}
+getData();
+</script>
+</html>

@@ -22,6 +22,7 @@ socket.on('wifidata', (data) => { //response from wifi signal info
 });
 
 function drawCanvas(data) {
+  console.log(data);
   var canvas = document.getElementById('canvas');
   var socket = io('/');
   context = canvas.getContext('2d');
@@ -34,7 +35,8 @@ var top = 20;
 for (var i = data.length - 4; i < data.length; i++){
   left += 20;
   right += 20;
-  ap.push({top:})
+  top += 20;
+  ap.push({top: top, left: left, radius: -1*data[i].SIGNAL/3, name: data[i].ESSID});
 }
 
   ap.push({top:20, left:30, radius: -1*data[data.length-1].SIGNAL/3, name: data[data.length-1].ESSID})
@@ -45,7 +47,7 @@ for (var i = data.length - 4; i < data.length; i++){
   for(i=0;i<ap.length;i++){
   context.beginPath();
   context.arc(ap[i].top, ap[i].left, ap[i].radius, 0, 2 * Math.PI);
-
+  context.fillText(ap[i].ESSID, ap[i].top, ap[i].left)
   context.stroke();
   //contet.endPath();
 

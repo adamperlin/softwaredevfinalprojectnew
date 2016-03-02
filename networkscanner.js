@@ -45,6 +45,7 @@ console.log(toRun);
   spawn.on('exit', (exit_code)=>{
     console.log('exited with code: %d', exit_code);
     console.log(scan_data);
+    console.log(scan_data);
     return callback(this.parse(scan_data));
   });
 };

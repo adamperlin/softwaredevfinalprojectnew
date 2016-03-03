@@ -69,13 +69,13 @@ function updateDisplay(data){
     switch (true){
       case data[i].MACADDR.includes(mathApn.addr):
         mathApn.signal = data[i].SIGNAL;
-        mathApn.radius = mathApn.signal / 4;
-	console.log(mathApn.radius);
+	console.log(data[i].SIGNAL);
+        mathApn.radius = mathApn.signal;
       break;
       case data[i].MACADDR.includes(saasDronesApn.addr):
         saasDronesApn.signal = data[i].SIGNAL;
-        mathApn.radius = mathApn.signal / 4;
-	console.log(mathApn.radius);
+	console.log(data[i].SIGNAL);
+        saasDronesApn.radius = saasDronesApn.signal;
       break;
     }
   }
@@ -88,13 +88,15 @@ ctx.stroke();
 ctx.beginPath();
 ctx.font = "10pt Arial";
 ctx.arc(mathApn.ycoord, mathApn.xcoord, mathApn.radius, 0, 2*Math.PI);
+ctx.stroke();
+ctx.beginPath();
 ctx.arc(saasDronesApn.ycoord, saasDronesApn.xcoord, saasDronesApn.radius, 0, 2*Math.PI);
-ctx.fillText(mathApn.addr+"    "+"%"+mathApn.signal, mathApn.ycoord, mathApn.xcoord);
+ctx.fillText(mathApn.addr+"    "+mathApn.signal+"%", mathApn.ycoord, mathApn.xcoord);
 ctx.fillText(saasDronesApn.addr+"   "+saasDronesApn.signal + "%", saasDronesApn.ycoord, saasDronesApn.xcoord);
 ctx.stroke();
 
 
 }
-window.onload = setInterval(getData, 1000);
+window.onload = setInterval(getData, 2000);
 </script>
 </html>

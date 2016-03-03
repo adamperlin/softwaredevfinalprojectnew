@@ -57,19 +57,19 @@ for (var i = 1; i < cells.length; i++){
     var temp = new Object();
     var element = cells[i];
     var t;
-    if ((t = element.match(/ESSID:+\"[a-zA-Z]+\"/g))){
-    temp.ESSID = element.match(/ESSID:+\"([a-zA-Z]|\d*)+\"/g).toString().replace("ESSID:\"","").replace("\"","");
+    if ((t = element.match(/ESSID:+\"[a-zA-Z]+\"/g))){ //See if ESSID exists to avoid failing
+    temp.ESSID = element.match(/ESSID:+\"([a-zA-Z]|\d*)+\"/g).toString().replace("ESSID:\"","").replace("\"",""); //Match ESSID + any character or any number of digits. Remove the Unnecessary data afterwards
   }
-    if ((t = element.match(/Quality=+\d+\/+\d+/g))){
+    if ((t = element.match(/Quality=+\d+\/+\d+/g))){ 
     temp.QUALITY = element.match(/Quality=+\d+\/+\d+/g).toString().replace("Quality=","").replace(",","");
   }
   //var regex = /Signal level=+(aA-zZ|\d*)+\/+(aA-zZ|\d*)/;
-  var regex = /Signal level=+(.+[^\s])/g;
+  var regex = /Signal level=+(.+[^\s])/g; //math Signal level= + any non-whitespace character
   if ((t = element.match(regex))){
     console.log(t.toString());
     temp.SIGNAL = element.match(regex).toString().replace("Signal level=","").replace(/(\s|dBm|)+/g, "");
     if (temp.SIGNAL.includes('/')){
-      var arr  = temp.SIGNAL.split(/\//);
+      var arr  = temp.SIGNAL.split(/\//); //If signal strength is given as percentage/100, then split and divide the two numbers to get a numerical percentage
 	temp.SIGNAL = 100*(Number(arr[0])/Number(arr[1]));
     }
 console.log(temp.SIGNAL);

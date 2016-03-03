@@ -1,15 +1,5 @@
-var spawn = require('child_process').spawn;
+var iwlist = require('./networkscanner.js')('wlp2s0');
 
-const cmd = spawn('iwlist', ['wlp2s0','scan']);
-
-cmd.stdout.on('data',(data)=>{
-  console.log(data.toString());
-});
-
-cmd.stderr.on('data',(data)=>{
-  console.error(data.toString());
-});
-
-cmd.on('close', (code) =>{
-  console.log(`exited with code %s`, code);
+iwlist.scan((data)=>{
+  console.log(data);
 });

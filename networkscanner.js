@@ -63,13 +63,15 @@ for (var i = 1; i < cells.length; i++){
     if ((t = element.match(/Quality=+\d+\/+\d+/g))){
     temp.QUALITY = element.match(/Quality=+\d+\/+\d+/g).toString().replace("Quality=","").replace(",","");
   }
-  if ((t = element.match(/Signal level=+(aA-zZ|\d*)+\/+(aA-zZ|\d*)/) )){
-    temp.SIGNAL = element.match(/Signal level=+(aA-zZ|\d*)+\/+(aA-zZ|\d*)/).toString();
+  //var regex = /Signal level=+(aA-zZ|\d*)+\/+(aA-zZ|\d*)/;
+  var regex = /Signal level=+(.+[^\s])/g;
+  if ((t = element.match(regex))){
+    console.log(t.toString());
+    temp.SIGNAL = element.match(regex).toString().replace("Signal level=","").replace(/(\s|dBm|)+/g, "");
+    if (temp.SIGNAL.includes('/')){
+      temp.SIGNAL = temp.SIGNAL.replace(/\//,"");
+    }
 console.log(temp.SIGNAL);
-    temp.SIGNAL = temp.SIGNAL.replace("Signal level=","");
-
-	
-
   }
   if ((t = element.match(/Address: +([a-zA-Z]|\d|:)+/g))){
     temp.MACADDR = element.match(/Address: +([a-zA-Z]|\d|:)+/g).toString().replace("Address: ","");
@@ -88,7 +90,8 @@ objects = (function(objs){
       }
     }
   }
-  return objs;
+return objs;
 })(objects);
 return objects;
+//console.log(objects);
 };

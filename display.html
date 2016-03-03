@@ -63,7 +63,7 @@ function apIndicator (xcoord, ycoord, addr, label){ //constructor for an access 
 var mathApn = new apIndicator(150, 40, "EF:61:95", "Math Apn"); // last 3 entries in the MAC address
 var saasDronesApn = new apIndicator(40, 20, "94:89:AB");
 function updateDisplay(data){
-  var canv = document.getElementById('canvs');
+  var canv = document.getElementById('canvas');
   var ctx = canv.getContext('2d');
   for (var i = 0; i < data.length; i++){
     switch (true){
@@ -84,9 +84,9 @@ ctx.arc(saasDronesApn.ycoord, saasDronesApn.xcoord, saasDronesApn.radius, 0, 2*M
 ctx.fillText(mathApn.addr+" "+mathApn.signal, mathApn.ycoord, mathApn.xcoord);
 ctx.fillText(saasDronesApn.addr+" "+saasDronesApn.signal, saasDronesApn.ycoord, saasDronesApn.xcoord);
 ctx.stroke();
-context.font = '18pt Arial';
-context.fillStyle = 'rgb(4,222,3)';
-context.fillText("access points", 10, 20);
+ctx.font = '18pt Arial';
+ctx.fillStyle = 'rgb(4,222,3)';
+ctx.fillText("access points", 10, 20);
 
 
 }

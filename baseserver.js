@@ -1,7 +1,7 @@
 var app = require('http').createServer(handler)
 var io = require('socket.io')(app);
 var fs = require('fs');
-var iwlist = require("./networkscanner.js")('wlp2s0');
+var iwlist = require("./networkscanner.js")('wlan0');
 
 //pageName is the same as fileName but with .html instead of .js
 pageName = 'display.html';

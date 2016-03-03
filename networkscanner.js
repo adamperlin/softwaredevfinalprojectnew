@@ -69,7 +69,8 @@ for (var i = 1; i < cells.length; i++){
     console.log(t.toString());
     temp.SIGNAL = element.match(regex).toString().replace("Signal level=","").replace(/(\s|dBm|)+/g, "");
     if (temp.SIGNAL.includes('/')){
-      temp.SIGNAL = temp.SIGNAL.replace(/\//,"");
+      var arr  = temp.SIGNAL.split(/\//);
+	temp.SIGNAL = 100*(Number(arr[0])/Number(arr[1]));
     }
 console.log(temp.SIGNAL);
   }

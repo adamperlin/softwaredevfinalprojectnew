@@ -61,7 +61,7 @@ function apIndicator (xcoord, ycoord, addr, label){ //constructor for an access 
 }
 
 var mathApn = new apIndicator(40,190, "EF:61:95", "Math Apn"); // last 3 entries in the MAC address
-var saasDronesApn = new apIndicator(70, 60, "94:89:AB");
+var saasDronesApn = new apIndicator(40, 60, "94:89:AB");
 function updateDisplay(data){
   var canv = document.getElementById('canvas');
   var ctx = canv.getContext('2d');
@@ -89,7 +89,7 @@ ctx.beginPath();
 ctx.font = "10pt Arial";
 ctx.arc(mathApn.ycoord, mathApn.xcoord, mathApn.radius, 0, 2*Math.PI);
 ctx.arc(saasDronesApn.ycoord, saasDronesApn.xcoord, saasDronesApn.radius, 0, 2*Math.PI);
-ctx.fillText(mathApn.addr+"    "+"%"+mathApn.signal, mathApn.ycoord, mathApn.xcoord);
+ctx.fillText(mathApn.addr+"    "+mathApn.signal+"%", mathApn.ycoord, mathApn.xcoord);
 ctx.fillText(saasDronesApn.addr+"   "+saasDronesApn.signal + "%", saasDronesApn.ycoord, saasDronesApn.xcoord);
 ctx.stroke();
 

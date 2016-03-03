@@ -56,16 +56,20 @@ var objects = [];
 for (var i = 1; i < cells.length; i++){
     var temp = new Object();
     var element = cells[i];
-    if (element.match(/ESSID:+\"[a-zA-Z]+\"/g) != null){
+    var t;
+    if ((t = element.match(/ESSID:+\"[a-zA-Z]+\"/g))){
     temp.ESSID = element.match(/ESSID:+\"([a-zA-Z]|\d*)+\"/g).toString().replace("ESSID:\"","").replace("\"","");
-  }else{
-    console.log('parse error');
-     continue;
   }
+    if ((t = element.match(/Quality=+\d+\/+\d+/g))){
     temp.QUALITY = element.match(/Quality=+\d+\/+\d+/g).toString().replace("Quality=","").replace(",","");
-    temp.SIGNAL = element.match(/Signal level=+(\W|\d)+/g).toString().replace("Signal level=","");
+  }
+  if ((t = element.match(/Signal level=+(.+)/) )){
+    temp.SIGNAL = element.match(/Signal level=+(.+)/).toString().replace("Signal level=","");
+  }
+  if ((t = element.match(/Address: +([a-zA-Z]|\d|:)+/g))){
     temp.MACADDR = element.match(/Address: +([a-zA-Z]|\d|:)+/g).toString().replace("Address: ","");
     objects.push(temp);
+  }
 }
 objects = (function(objs){
   var minObj = {};

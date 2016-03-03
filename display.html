@@ -11,28 +11,25 @@
   border: thin inset #aaaaaa;
 }
     </style>
-  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script>
 var socket = io('/');
 function getData(){
   socket.emit('getwifidata'); //send a wifi data request
 }
 socket.on('wifidata', (data) => { //response from wifi signal info
-  drawCanvas(data);
+  updateDisplay(data);
 });
 
-function drawCanvas(data) {
-  console.log(data);
+/*function drawCanvas(data) {
   var canvas = document.getElementById('canvas');
-  var socket = io('/');
   context = canvas.getContext('2d');
-  ap = [];
-  ap1 = {};
+
 
 var left = 20;
 var right = 20;
 var top = 20;
-for (var i = data.length - 4; i < data.length; i++){
+/*for (var i = data.length - 4; i < data.length; i++){
   left += 20;
   right += 20;
   top += 20;
@@ -55,7 +52,44 @@ for (var i = data.length - 4; i < data.length; i++){
   context.font = '18pt Arial';
   context.fillStyle = 'rgb(4,222,3)';
   context.fillText("access points", 10, 20);
+}*/
+function apIndicator (xcoord, ycoord, addr, label){ //constructor for an access point indicator object that will display on the canvas
+  this.xcoord = xcoord;
+  this.ycoord = ycoord;
+  this.addr = addr;
+  this.label = label;
 }
-getData();
+
+var mathApn = new apIndicator(150, 40, "EF:61:95", "Math Apn"); // last 3 entries in the MAC address
+var saasDronesApn = new apIndicator(40, 20, "94:89:AB");
+function updateDisplay(data){
+  var canv = document.getElementById('canvs');
+  var ctx = canv.getContext('2d');
+  for (var i = 0; i < data.length; i++){
+    switch (true){
+      case data[i].MACADDR.includes(mathApn.addr):
+        mathApn.signal = data[i].SIGNAL;
+        mathApn.radius = mathApn.signal * 50;
+      break;
+      case data[i].MACADDR.includes(saasDronesApn.addr):
+        saasDronesApn.signal = data[i].SIGNAL;
+        mathApn.radius = mathApn.signal * 50;
+      break;
+    }
+  }
+//draw objects on the canvas
+ctx.beginPath();
+ctx.arc(mathApn.ycoord, mathApn.xcoord, mathApn.radius, 0, 2*Math.pi);
+ctx.arc(saasDronesApn.ycoord, saasDronesApn.xcoord, saasDronesApn.radius, 0, 2*Math.pi);
+ctx.fillText(mathApn.addr+" "+mathApn.signal, mathApn.ycoord, mathApn.xcoord);
+ctx.fillText(saasDronesApn.addr+" "+saasDronesApn.signal, saasDronesApn.ycoord, saasDronesApn.xcoord);
+ctx.stroke();
+context.font = '18pt Arial';
+context.fillStyle = 'rgb(4,222,3)';
+context.fillText("access points", 10, 20);
+
+
+}
+window.onload = setInterval(getData, 1000);
 </script>
 </html>

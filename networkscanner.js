@@ -39,7 +39,7 @@ console.log(toRun);
     scan_data += buff.toString();
   });
   spawn.stderr.on('data', (data)=>{
-    console.error('data');
+    console.error(data);
     throw "Error: iwlist failed";
   });
   spawn.on('exit', (exit_code)=>{
@@ -63,8 +63,13 @@ for (var i = 1; i < cells.length; i++){
     if ((t = element.match(/Quality=+\d+\/+\d+/g))){
     temp.QUALITY = element.match(/Quality=+\d+\/+\d+/g).toString().replace("Quality=","").replace(",","");
   }
-  if ((t = element.match(/Signal level=+(.+)/) )){
-    temp.SIGNAL = element.match(/Signal level=+(.+)/).toString().replace("Signal level=","");
+  if ((t = element.match(/Signal level=+(aA-zZ|\d*)+\/+(aA-zZ|\d*)/) )){
+    temp.SIGNAL = element.match(/Signal level=+(aA-zZ|\d*)+\/+(aA-zZ|\d*)/).toString();
+console.log(temp.SIGNAL);
+    temp.SIGNAL = temp.SIGNAL.replace("Signal level=","");
+
+	
+
   }
   if ((t = element.match(/Address: +([a-zA-Z]|\d|:)+/g))){
     temp.MACADDR = element.match(/Address: +([a-zA-Z]|\d|:)+/g).toString().replace("Address: ","");

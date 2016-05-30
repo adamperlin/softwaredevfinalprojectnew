@@ -1,5 +1,6 @@
 /* This is a node module that uses built in unix tools in order to pinpoint the best networks for use, and possibly to be able to position some kind of robot
-based on network strength and triangulating position*/
+based on network strength and triangulating position*/ 
+// based on github.com/maxogden/iwlist/
 "use strict";
 var fs = require('fs');
 var util = require('util');
